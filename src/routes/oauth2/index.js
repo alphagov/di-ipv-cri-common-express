@@ -11,6 +11,7 @@ const {
   retrieveAuthorizationCode,
 } = require("./middleware");
 
+const { markSessionAsComplete } = require("../../lib/session-complete");
 router.get(
   "/authorize",
   addAuthParamsToSession,
@@ -18,6 +19,11 @@ router.get(
   initSessionWithJWT,
   redirectToEntryPoint
 );
-router.get("/callback", retrieveAuthorizationCode, redirectToCallback);
+router.get(
+  "/callback",
+  retrieveAuthorizationCode,
+  markSessionAsComplete,
+  redirectToCallback
+);
 
 module.exports = router;

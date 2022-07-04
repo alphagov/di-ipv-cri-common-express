@@ -20,6 +20,10 @@ module.exports = {
       redirect_uri = err?.response?.data?.redirect_uri || redirect_uri;
     }
 
+    if (err.code === "cri_back_button") {
+      error.code = "access_denied";
+    }
+
     try {
       const redirectUrl = oAuth.buildRedirectUrl({
         authParams: {
